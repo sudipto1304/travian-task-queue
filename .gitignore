@@ -1,0 +1,40 @@
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+bin/main/application.yml
+bin/main/com/travian/task/queue/controller/TaskListController.class
+bin/main/com/travian/task/queue/data/TaskQueue.class
+bin/main/com/travian/task/queue/request/Status.class
+bin/main/com/travian/task/queue/request/TaskRequest.class
+bin/main/com/travian/task/queue/request/TaskType.class
+bin/main/com/travian/task/queue/service/TaskService.class
+bin/main/com/travian/task/queue/TaskQueueApplication.class
+bin/test/com/travian/task/taskqueue/TaskQueueApplicationTests.class
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
+gradlew
+gradlew.bat
+settings.gradle
