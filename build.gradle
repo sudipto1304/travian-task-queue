@@ -7,15 +7,19 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		
+
 	}
 }
 
+
 apply plugin: 'java'
+apply plugin: 'war'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.travian.task'
-version = '0.0.1-SNAPSHOT'
+version = ''
 sourceCompatibility = '1.8'
 
 repositories {
@@ -30,7 +34,9 @@ configurations.all {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok")
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.8.0'
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.8.0'
