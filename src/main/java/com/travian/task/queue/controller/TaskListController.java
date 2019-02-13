@@ -1,6 +1,8 @@
 package com.travian.task.queue.controller;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -69,6 +71,17 @@ public class TaskListController {
 	@RequestMapping(value="/completeTask/{villageId}/{taskId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Status> completeTask(@PathVariable("villageId") String villageId, @PathVariable("taskId") String taskId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
 		Status response = service.completeTask(villageId, taskId);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+	
+	@ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created", response = TaskRequest.class),
+            @ApiResponse(code = 412, message = "Precondition Failed"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+	@RequestMapping(value="/getAllTask/{villageId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TaskRequest>> getAllTask(@PathVariable("villageId") String villageId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+		LinkedList<TaskRequest> response = service.getAllTask(villageId);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 }

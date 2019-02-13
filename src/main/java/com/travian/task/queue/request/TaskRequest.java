@@ -12,7 +12,7 @@ public class TaskRequest implements Serializable{
 	private String villageId;
 	private String path;
 	private int level;
-	private int resourceId;
+	private int id;
 	private int buildingId;
 	private TaskType taskType;
 	private String taskId;

@@ -32,6 +32,12 @@ public class TaskService {
 		return TaskQueue.getInstance().getTask(villageId);
 	}
 	
+	public LinkedList<TaskRequest> getAllTask(String villageId) {
+		if(Log.isDebugEnabled())
+			Log.debug(TaskQueue.getInstance().getAllTask(villageId)!=null?TaskQueue.getInstance().getAllTask(villageId).toString():"");
+		return (LinkedList<TaskRequest>) TaskQueue.getInstance().getAllTask(villageId);
+	}
+	
 	public Status completeTask(String villageId, String taskId) {
 		TaskRequest removedTask = TaskQueue.getInstance().pollTask(villageId);
 		if(removedTask.getTaskId().equals(taskId)){

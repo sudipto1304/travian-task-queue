@@ -1,3 +1,7 @@
+server:
+  port: 4503
+  servlet:
+    contextPath: /travian
 spring:
   application:
     name: travian-task-list
