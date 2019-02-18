@@ -84,4 +84,35 @@ public class TaskListController {
 		LinkedList<TaskRequest> response = service.getAllTask(villageId);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
+	
+	
+	@ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created", response = List.class),
+            @ApiResponse(code = 412, message = "Precondition Failed"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+	@RequestMapping(value="/createTasks", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Status>> createTasks(@RequestBody List<TaskRequest> request, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+		if(Log.isDebugEnabled())
+			Log.debug("AccoiuntInfo Request::"+request);
+		List<Status> response = service.addTasks(request);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+	
+	
+	@ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created", response = Status.class),
+            @ApiResponse(code = 412, message = "Precondition Failed"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+	@RequestMapping(value="/removeAllTasks/{villageId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Status> removeAllTasks(@PathVariable("villageId") String villageId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+		if(Log.isDebugEnabled())
+			Log.debug("AccoiuntInfo Request::"+villageId);
+		Status response = service.removeAllTasks(villageId);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+	
+	
+	
 }

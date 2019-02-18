@@ -52,6 +52,14 @@ public class TaskQueue {
 		}
 	}
 	
+	
+	public void removeAllTaks(String villageId) {
+		if(tasks.containsKey(villageId)) {
+			tasks.remove(villageId);
+		}
+	}
+	
+	
 	public Queue<TaskRequest> getAllTask(String villageId){
 		return tasks.get(villageId);
 	}

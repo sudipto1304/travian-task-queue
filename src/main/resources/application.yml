@@ -1,10 +1,12 @@
 server:
   port: 4503
   servlet:
-    contextPath: /travian
+    contextPath: /travian-task-queue
 spring:
   application:
     name: travian-task-list
+  jmx:
+    default-domain: travian-task-list
 logging:
   level:
     root: WARN
