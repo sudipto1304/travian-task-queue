@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.travian.task.queue.request.Status;
 import com.travian.task.queue.request.TaskRequest;
+import com.travian.task.queue.request.TroopTrain;
 import com.travian.task.queue.service.TaskService;
 
 import io.swagger.annotations.ApiResponse;
@@ -81,7 +82,7 @@ public class TaskListController {
     })
 	@RequestMapping(value="/getAllTask/{villageId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<TaskRequest>> getAllTask(@PathVariable("villageId") String villageId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
-		LinkedList<TaskRequest> response = service.getAllTask(villageId);
+		List<TaskRequest> response = service.getAllTask(villageId);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	
@@ -99,6 +100,17 @@ public class TaskListController {
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	
+	@ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created", response = Status.class),
+            @ApiResponse(code = 412, message = "Precondition Failed"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+	@RequestMapping(value="/skipTask/{villageId}/{taskId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Status> skipTask(@PathVariable("villageId") String villageId, @PathVariable("taskId") String taskId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+		Status response = service.skipTask(villageId, taskId);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+	
 	
 	@ApiResponses(value = {
             @ApiResponse(code = 201, message = "Created", response = Status.class),
@@ -110,6 +122,40 @@ public class TaskListController {
 		if(Log.isDebugEnabled())
 			Log.debug("AccoiuntInfo Request::"+villageId);
 		Status response = service.removeAllTasks(villageId);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+	
+	@ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created", response = Status.class),
+            @ApiResponse(code = 412, message = "Precondition Failed"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+	@RequestMapping(value="/trainTroop", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Status> trainTroop(@RequestBody TroopTrain request, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+		Status response = service.trainTroop(request);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+	
+	@ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created", response = List.class),
+            @ApiResponse(code = 412, message = "Precondition Failed"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+	@RequestMapping(value="/getTroopTrainTasks", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TroopTrain>> getTrainTaks(HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+		List<TroopTrain> response = service.getTrainingTasks();
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+	
+	
+	@ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created", response = Status.class),
+            @ApiResponse(code = 412, message = "Precondition Failed"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+	@RequestMapping(value="/updateTroopTask", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Status> updateTroopTask(@RequestBody List<TroopTrain> request, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+		Status response = service.updateTroopTask(request);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	

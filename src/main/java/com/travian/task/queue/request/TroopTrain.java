@@ -8,16 +8,19 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Data;
 import lombok.ToString;
 
+
 @Data
 @ToString
 @JsonInclude(Include.NON_NULL)
-public class TaskRequest implements Serializable{
+public class TroopTrain implements Serializable{
 	
-	private String villageId;
-	private String path;
-	private int level;
-	private int id;
-	private TaskType taskType;
 	private String taskId;
+	private  int villageId;
+	private String troopType;
+	private String building;
+	private TaskStatus status;
+	private int count;
+	private int targetCount;
+	private String link;
 
 }
