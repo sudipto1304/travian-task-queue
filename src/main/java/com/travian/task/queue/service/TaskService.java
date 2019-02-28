@@ -153,6 +153,8 @@ public class TaskService {
 					}
 					entity.setCount(entity.getCount()+req.getCount());
 					entity.setLink(req.getLink());
+					if(Log.isInfoEnabled())
+						Log.info("Previous troopCount::"+entity.getCount()+"::currently training ::"+req.getCount()+":: Total count for village id "+entity.getVillageId()+" is "+entity.getCount()+req.getCount());
 				}
 			}
 		}
