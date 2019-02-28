@@ -22,6 +22,8 @@ public class TrainingEntity implements Serializable{
 	private int taskSeq;
 	@Column(name="TASK_ID")
 	private String taskId;
+	@Column(name="USERID")
+	private String userId;
 	@Column(name="VILLAGE_ID")
 	private int villageId;
 	@Column(name="TROOP_TYPE")

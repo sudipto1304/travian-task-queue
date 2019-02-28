@@ -22,6 +22,8 @@ public class UpgradeEntity implements Serializable{
 	private int taskSeq;
 	@Column(name="TASK_ID")
 	private String taskId;
+	@Column(name="USERID")
+	private String userId;
 	@Column(name="LEVEL")
 	private int level;
 	@Column(name="UPGRADE_ID")

@@ -14,6 +14,7 @@ import lombok.ToString;
 public class TaskRequest implements Serializable{
 	
 	private String villageId;
+	private String userId;
 	private String path;
 	private int level;
 	private int id;

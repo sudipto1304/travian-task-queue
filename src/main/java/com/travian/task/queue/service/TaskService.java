@@ -36,6 +36,7 @@ public class TaskService {
 		request.setTaskId(taskId);
 		UpgradeEntity upgradeEntity = new UpgradeEntity();
 		upgradeEntity.setLevel(request.getLevel());
+		upgradeEntity.setUserId(request.getUserId());
 		upgradeEntity.setStatus(TaskStatus.OPEN.name());
 		upgradeEntity.setTaskId(taskId);
 		upgradeEntity.setTaskType(request.getTaskType().name());
@@ -52,6 +53,7 @@ public class TaskService {
 			String taskId = UUID.randomUUID().toString();
 			UpgradeEntity upgradeEntity = new UpgradeEntity();
 			upgradeEntity.setLevel(e.getLevel());
+			upgradeEntity.setUserId(e.getUserId());
 			upgradeEntity.setStatus(TaskStatus.OPEN.name());
 			upgradeEntity.setTaskId(taskId);
 			upgradeEntity.setTaskType(e.getTaskType().name());
@@ -112,6 +114,7 @@ public class TaskService {
 		TrainingEntity training = new TrainingEntity();
 		String taskId = UUID.randomUUID().toString();
 		training.setTaskId(taskId);
+		training.setUserId(request.getUserId());
 		training.setStatus(TaskStatus.OPEN.name());
 		training.setTargetCount(request.getTargetCount());
 		training.setTrainBuilding(request.getBuilding());
