@@ -12,9 +12,9 @@ import com.travian.task.queue.entity.UpgradeEntity;
 @Repository
 @Transactional
 public interface UpgradeRepository extends JpaRepository<UpgradeEntity, Integer>{
-	List<UpgradeEntity> findByVillageIdAndStatusOrderByTaskSeq(int villageId, String status);
+	List<UpgradeEntity> findByUserIdAndVillageIdAndStatusOrderByTaskSeq(String userId, int villageId, String status);
 	
-	List<UpgradeEntity> deleteByVillageId(int villageId);
+	List<UpgradeEntity> deleteByUserIdAndVillageId(String userId, int villageId);
 	Integer deleteByVillageIdAndTaskId(int villageId, String taskId);
 	
 	UpgradeEntity findByVillageIdAndTaskId(int villageId, String taskId);

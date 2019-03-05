@@ -66,17 +66,17 @@ public class TaskService {
 		return status;
 	}
 
-	public Status removeAllTasks(String villageId) {
-		upgradeRepo.deleteByVillageId(Integer.valueOf(villageId));
+	public Status removeAllTasks(String userId, String villageId) {
+		upgradeRepo.deleteByUserIdAndVillageId(userId, Integer.valueOf(villageId));
 		return new Status("SUCCESS", 200);
 	}
 
-	public TaskRequest getTask(String villageId) {
-		return getAllTask(villageId).stream().findFirst().orElse(null);
+	public TaskRequest getTask(String userId, String villageId) {
+		return getAllTask(userId, villageId).stream().findFirst().orElse(null);
 	}
 
-	public List<TaskRequest> getAllTask(String villageId) {
-		List<UpgradeEntity> tasks = upgradeRepo.findByVillageIdAndStatusOrderByTaskSeq(Integer.valueOf(villageId),
+	public List<TaskRequest> getAllTask(String userId, String villageId) {
+		List<UpgradeEntity> tasks = upgradeRepo.findByUserIdAndVillageIdAndStatusOrderByTaskSeq(userId, Integer.valueOf(villageId),
 				TaskStatus.OPEN.name());
 		List<TaskRequest> response = new ArrayList<>();
 		tasks.forEach(e -> {
@@ -124,9 +124,9 @@ public class TaskService {
 		return new Status(taskId, 200);
 	}
 	
-	public List<TroopTrain> getTrainingTasks(){
+	public List<TroopTrain> getTrainingTasks(String userId){
 		List<TroopTrain> response = new ArrayList<>();
-		List<TrainingEntity> entities = traningRepo.findAllByStatusOrderByTaskSeq(TaskStatus.OPEN.name());
+		List<TrainingEntity> entities = traningRepo.findByUserIdAndStatusOrderByTaskSeq(userId, TaskStatus.OPEN.name());
 		entities.forEach(e->{
 			TroopTrain train = new TroopTrain();
 			train.setBuilding(e.getTrainBuilding());

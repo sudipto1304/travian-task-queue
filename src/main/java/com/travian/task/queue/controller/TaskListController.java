@@ -57,9 +57,9 @@ public class TaskListController {
             @ApiResponse(code = 412, message = "Precondition Failed"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-	@RequestMapping(value="/getTask/{villageId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<TaskRequest> getTask(@PathVariable("villageId") String villageId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
-		TaskRequest response = service.getTask(villageId);
+	@RequestMapping(value="/getTask/{userId}/{villageId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<TaskRequest> getTask(@PathVariable("userId") String userId, @PathVariable("villageId") String villageId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+		TaskRequest response = service.getTask(userId, villageId);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	
@@ -80,9 +80,9 @@ public class TaskListController {
             @ApiResponse(code = 412, message = "Precondition Failed"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-	@RequestMapping(value="/getAllTask/{villageId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<TaskRequest>> getAllTask(@PathVariable("villageId") String villageId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
-		List<TaskRequest> response = service.getAllTask(villageId);
+	@RequestMapping(value="/getAllTask/{userId}/{villageId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TaskRequest>> getAllTask(@PathVariable("userId") String userId, @PathVariable("villageId") String villageId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+		List<TaskRequest> response = service.getAllTask(userId, villageId);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	
@@ -117,11 +117,11 @@ public class TaskListController {
             @ApiResponse(code = 412, message = "Precondition Failed"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-	@RequestMapping(value="/removeAllTasks/{villageId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Status> removeAllTasks(@PathVariable("villageId") String villageId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+	@RequestMapping(value="/removeAllTasks/{userId}/{villageId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Status> removeAllTasks(@PathVariable("userId") String userId, @PathVariable("villageId") String villageId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
 		if(Log.isDebugEnabled())
 			Log.debug("AccoiuntInfo Request::"+villageId);
-		Status response = service.removeAllTasks(villageId);
+		Status response = service.removeAllTasks(userId, villageId);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	
@@ -141,9 +141,9 @@ public class TaskListController {
             @ApiResponse(code = 412, message = "Precondition Failed"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-	@RequestMapping(value="/getTroopTrainTasks", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<TroopTrain>> getTrainTaks(HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
-		List<TroopTrain> response = service.getTrainingTasks();
+	@RequestMapping(value="/getTroopTrainTasks/{userId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TroopTrain>> getTrainTaks(@PathVariable("userId") String userId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+		List<TroopTrain> response = service.getTrainingTasks(userId);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	

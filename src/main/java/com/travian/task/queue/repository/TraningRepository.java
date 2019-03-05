@@ -14,7 +14,7 @@ import com.travian.task.queue.entity.TrainingEntity;
 @Transactional
 public interface TraningRepository extends JpaRepository<TrainingEntity, Integer>{
 
-		List<TrainingEntity> findAllByStatusOrderByTaskSeq(String status);
+		List<TrainingEntity> findByUserIdAndStatusOrderByTaskSeq(String userId, String status);
 		List<TrainingEntity> findByTaskIdIn(List<String> taskId);
 
 }
