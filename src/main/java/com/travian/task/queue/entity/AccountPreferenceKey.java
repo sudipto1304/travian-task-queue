@@ -9,11 +9,10 @@ import lombok.Data;
 
 @Embeddable
 @Data
-public class PreferenceKey implements Serializable{
+public class AccountPreferenceKey implements Serializable{
+	
 	@Column(name="USERID", nullable = false)
 	private String userId;
-	@Column(name="VILLAGEID", nullable = false)
-	private int villageId;
 	@Column(name="PREFERENCE", nullable = false)
 	private String preference;
 
