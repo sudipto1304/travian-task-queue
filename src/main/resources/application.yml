@@ -6,7 +6,7 @@ spring:
   application:
     name: travian-task-list
   datasource:
-    url: jdbc:mysql://localhost:3306/travian_task?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/travian_task?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: travianadmin
     password: Antaheen@4813
