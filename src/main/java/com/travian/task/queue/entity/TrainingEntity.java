@@ -10,10 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table(name = "TRAINING_TASK")
 @Data
+@ToString
 public class TrainingEntity implements Serializable{
 	
 	@Id

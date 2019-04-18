@@ -145,19 +145,26 @@ public class TaskService {
 	
 	public Status updateTroopTask(List<TroopTrain> request) {
 		List<TrainingEntity> entities = traningRepo.findByTaskIdIn(request.stream().map(e->e.getTaskId()).collect(Collectors.toList()));
+		if(Log.isInfoEnabled())
+			Log.info("troop update Request--->"+request);
+		if(Log.isInfoEnabled())
+			Log.info("troop update tasks in db--->"+entities);
 		for(TrainingEntity entity : entities) {
 			for(TroopTrain req : request) {
 				if(entity.getTaskId().equals(req.getTaskId())) {
+					if(Log.isInfoEnabled())
+						Log.info("Previous troopCount::"+entity.getCount()+"::currently training ::"+req.getCount()+":: Total count for village id "+entity.getVillageId()+" is "+Integer.valueOf(entity.getCount()+req.getCount()));
 					if(entity.getCount()+req.getCount()>=entity.getTargetCount()) {
 						entity.setStatus(TaskStatus.DONE.name());
 					}
-					entity.setCount(entity.getCount()+req.getCount());
+					entity.setCount(Integer.valueOf(entity.getCount()+req.getCount()));
 					entity.setLink(req.getLink());
-					if(Log.isInfoEnabled())
-						Log.info("Previous troopCount::"+entity.getCount()+"::currently training ::"+req.getCount()+":: Total count for village id "+entity.getVillageId()+" is "+entity.getCount()+req.getCount());
+					
 				}
 			}
 		}
+		if(Log.isInfoEnabled())
+			Log.info("final update--->"+entities);
 		traningRepo.saveAll(entities);
 		return new Status("SUCCESS", 200);
 	}
