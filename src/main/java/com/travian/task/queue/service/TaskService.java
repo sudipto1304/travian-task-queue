@@ -1,7 +1,9 @@
 package com.travian.task.queue.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -167,6 +169,29 @@ public class TaskService {
 			Log.info("final update--->"+entities);
 		traningRepo.saveAll(entities);
 		return new Status("SUCCESS", 200);
+	}
+	
+	public Map<String, List<TaskRequest>> getAllTasks(String userId){
+		Map<String, List<TaskRequest>> result = new HashMap<String, List<TaskRequest>>();
+		List<TaskRequest> taskList = null;
+		List<UpgradeEntity> allTask = upgradeRepo.findAllByUserId(userId);
+		for(UpgradeEntity task : allTask) {
+			TaskRequest villageTask = new TaskRequest();
+			villageTask.setId(task.getUpgradeId());
+			villageTask.setTaskId(task.getTaskId());
+			villageTask.setLevel(task.getLevel());
+			villageTask.setTaskType(TaskType.valueOf(task.getTaskType()));
+			villageTask.setUserId(task.getUserId());
+			villageTask.setVillageId(String.valueOf(task.getVillageId()));
+			if(result.containsKey(String.valueOf(task.getVillageId()))) {
+				result.get(String.valueOf(task.getVillageId())).add(villageTask);
+			}else {
+				taskList = new ArrayList<TaskRequest>();
+				taskList.add(villageTask);
+				result.put(String.valueOf(task.getVillageId()), taskList);
+			}
+		}
+		return result;
 	}
 
 }

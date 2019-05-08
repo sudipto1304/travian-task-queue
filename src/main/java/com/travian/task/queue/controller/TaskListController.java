@@ -3,6 +3,7 @@ package com.travian.task.queue.controller;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -156,6 +157,18 @@ public class TaskListController {
 	@RequestMapping(value="/updateTroopTask", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Status> updateTroopTask(@RequestBody List<TroopTrain> request, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
 		Status response = service.updateTroopTask(request);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+	
+	
+	@ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created", response = TaskRequest.class),
+            @ApiResponse(code = 412, message = "Precondition Failed"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+	@RequestMapping(value="/getAllTask/{userId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map> getAllTask(@PathVariable("userId") String userId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+		Map<String, List<TaskRequest>> response = service.getAllTasks(userId);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	

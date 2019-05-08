@@ -16,6 +16,6 @@ public interface UpgradeRepository extends JpaRepository<UpgradeEntity, Integer>
 	
 	List<UpgradeEntity> deleteByUserIdAndVillageId(String userId, int villageId);
 	Integer deleteByVillageIdAndTaskId(int villageId, String taskId);
-	
+	List<UpgradeEntity> findAllByUserId(String userId);
 	UpgradeEntity findByVillageIdAndTaskId(int villageId, String taskId);
 } 
