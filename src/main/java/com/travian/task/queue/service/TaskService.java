@@ -1,6 +1,7 @@
 package com.travian.task.queue.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,14 +13,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.travian.task.queue.entity.TradeEntity;
 import com.travian.task.queue.entity.TrainingEntity;
 import com.travian.task.queue.entity.UpgradeEntity;
+import com.travian.task.queue.repository.TradeRepository;
 import com.travian.task.queue.repository.TraningRepository;
 import com.travian.task.queue.repository.UpgradeRepository;
 import com.travian.task.queue.request.Status;
 import com.travian.task.queue.request.TaskRequest;
 import com.travian.task.queue.request.TaskStatus;
 import com.travian.task.queue.request.TaskType;
+import com.travian.task.queue.request.TradeRequest;
 import com.travian.task.queue.request.TroopTrain;
 
 @Service
@@ -32,6 +36,9 @@ public class TaskService {
 	
 	@Autowired
 	TraningRepository traningRepo;
+	
+	@Autowired
+	TradeRepository tradeRepo;
 
 	public Status addTask(TaskRequest request) {
 		String taskId = UUID.randomUUID().toString();
@@ -192,6 +199,51 @@ public class TaskService {
 			}
 		}
 		return result;
+	}
+	
+	
+	public Status createTrade(TradeRequest trade) {
+		TradeEntity entity = new TradeEntity();
+		entity.setClay(trade.getClay());
+		entity.setCrop(trade.getCrop());
+		entity.setDestVillageName(trade.getDestVillageName());
+		entity.setInterval(trade.getInterval());
+		entity.setIron(trade.getIron());
+		entity.setSourceVillageId(trade.getSourceVillage());
+		entity.setUserId(trade.getUserId());
+		entity.setWood(trade.getWood());
+		entity.setTransactionId(UUID.randomUUID().toString());
+		tradeRepo.save(entity);
+		return new Status(entity.getTransactionId(), 200);
+	}
+	
+	public List<TradeRequest> getTrades(String userId){
+		List<TradeEntity> trades = tradeRepo.findAllByUserId(userId);
+		List<TradeRequest> response = new ArrayList<>();
+		trades.forEach(e->{
+			TradeRequest trade = new TradeRequest();
+			trade.setClay(e.getClay());
+			trade.setWood(e.getWood());
+			trade.setCrop(e.getCrop());
+			trade.setDestVillageName(e.getDestVillageName());
+			trade.setInterval(e.getInterval());
+			trade.setIron(e.getIron());
+			trade.setSourceVillage(e.getSourceVillageId());
+			trade.setUserId(e.getUserId());
+			trade.setWood(e.getWood());
+			trade.setTransactionId(e.getTransactionId());
+			trade.setLastUpdateTime(e.getLastUpdate());
+			response.add(trade);
+		});
+		
+		return response;
+	}
+	
+	public Status updateTrades(String transactionId){
+		TradeEntity trade = tradeRepo.findByTransactionId(transactionId);
+		trade.setLastUpdate(String.valueOf(new Date().getTime()));
+		tradeRepo.save(trade);
+		return new Status("SUCCESS", 200);
 	}
 
 }

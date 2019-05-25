@@ -2,6 +2,7 @@ package com.travian.task.queue.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,8 +40,8 @@ public class PreferenceController {
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
 	@RequestMapping(value="/getAccountPreference/{userId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Preference>> getAccountPreference(@PathVariable("userId") String userId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
-		List<Preference> response = service.getAccountPreference(userId);
+	public ResponseEntity<Map<String, String>> getAccountPreference(@PathVariable("userId") String userId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+		Map<String, String> response = service.getAccountPreference(userId);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	

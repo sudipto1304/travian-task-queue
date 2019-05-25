@@ -1,14 +1,14 @@
 package com.travian.task.queue.service;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.travian.task.queue.controller.PreferenceController;
 import com.travian.task.queue.entity.AccountPreferenceEntity;
 import com.travian.task.queue.repository.AccountPreferenceRepository;
 import com.travian.task.queue.response.Preference;
@@ -23,16 +23,13 @@ public class PreferenceService {
 	
 	
 	
-	public List<Preference> getAccountPreference(String userId){
-		List<Preference> response = new ArrayList<>();
+	public Map<String, String> getAccountPreference(String userId){
+		Map<String, String> response = new HashMap<>();
 		List<AccountPreferenceEntity> entities = repo.findAllByUserId(userId);
 		if(Log.isInfoEnabled())
 			Log.info("AccountPreferenceEntity:::"+entities);
 		entities.forEach(e->{
-			Preference pref = new Preference();
-			pref.setPreference(e.getPreference());
-			pref.setValue(e.getValue());
-			response.add(pref);
+			response.put(e.getPreference(), e.getValue());
 		});
 		return response;
 	}

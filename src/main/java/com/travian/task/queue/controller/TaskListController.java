@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.travian.task.queue.request.Status;
 import com.travian.task.queue.request.TaskRequest;
+import com.travian.task.queue.request.TradeRequest;
 import com.travian.task.queue.request.TroopTrain;
 import com.travian.task.queue.service.TaskService;
 
@@ -162,13 +163,46 @@ public class TaskListController {
 	
 	
 	@ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Created", response = TaskRequest.class),
+            @ApiResponse(code = 201, message = "Created", response = Map.class),
             @ApiResponse(code = 412, message = "Precondition Failed"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
 	@RequestMapping(value="/getAllTask/{userId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map> getAllTask(@PathVariable("userId") String userId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
 		Map<String, List<TaskRequest>> response = service.getAllTasks(userId);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+	
+	@ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created", response = Status.class),
+            @ApiResponse(code = 412, message = "Precondition Failed"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+	@RequestMapping(value="/createTrade", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Status> createTrade(@RequestBody TradeRequest request, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+		Status response = service.createTrade(request);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+	
+	@ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created", response = TradeRequest.class),
+            @ApiResponse(code = 412, message = "Precondition Failed"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+	@RequestMapping(value="/getTrades/{userId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TradeRequest>> getTrade(@PathVariable("userId") String userId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+		List<TradeRequest> response = service.getTrades(userId);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+	
+	@ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created", response = TradeRequest.class),
+            @ApiResponse(code = 412, message = "Precondition Failed"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+	@RequestMapping(value="/updateTrade/{transactionId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Status> updateTrade(@PathVariable("transactionId") String transactionId, HttpServletRequest servletRequest, @RequestHeader HttpHeaders headers) throws IOException {
+		Status response = service.updateTrades(transactionId);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 	

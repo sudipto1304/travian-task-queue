@@ -15,11 +15,17 @@ import lombok.Data;
 public class AccountPreferenceEntity implements Serializable{
 	
 
-	@Column(name="VALUE")
-	private String value;
 	@Id
+	@Column(name="PREF_SEQ")
+	private int seq;
+	
+	
 	@Column(name="USERID")
 	private String userId;
+	
+	@Column(name="VALUE")
+	private String value;
+	
 	@Column(name="PREFERENCE")
 	private String preference;
 
